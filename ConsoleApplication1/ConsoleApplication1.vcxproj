@@ -141,11 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\kinect_project3\kinect_project3\kinect_project3\kinect.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="kinectdevice.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="kinect.h" />
+    <ClInclude Include="kinectdevice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
