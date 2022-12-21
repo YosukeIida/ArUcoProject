@@ -118,6 +118,8 @@ int main()
     
     int sum_ids = 0;
     cv::Mat markerImage;
+    
+    
 
 
     // detectorパラメータを初期化する
@@ -165,27 +167,44 @@ int main()
 
                 cv::Ptr<cv::aruco::DetectorParameters> parameters = cv::aruco::DetectorParameters::create();
                 parameters->cornerRefinementMethod = cv::aruco::CORNER_REFINE_SUBPIX;
+
+
                 cv::aruco::detectMarkers(colorImg, dictionary, marker_corners, marker_ids, parameters, rejectedCandidates);
                 
-                for (auto marker_ids : marker_ids) {
-                    std::cout << marker_ids << std::endl;
-                    for (auto marker_corners : marker_corners) {
-                    std::cout << marker_corners << std::endl;
+                //cv::OutputArray marker_ids_outary = marker_ids;
+                //std::vector<cv::Mat> show_marker_ids;
+                //marker_ids_outary.getMatVector(show_marker_ids);
+
+                //for (auto show_marker_ids : show_marker_ids) {
+                //    std::cout << show_marker_ids << std::endl;
+                //}
+
+                //std::cout << "id:";
+                //for (size_t i = 0; i < marker_ids.size(); ++i) {
+                //    std::cout << marker_ids[i] << ",";
+                //}
+                //std::cout << std::endl;
+
+                std::cout << "corner:";
+                for (size_t num = 0; num < marker_ids.size(); ++num) {
+                    for (size_t i = 0; i < marker_corners.size(); ++i) {
+                        std::cout << marker_corners[num][i] << std::endl;
                     }
                 }
+
+                std::cout << std::endl << std::endl;
 
                 if (marker_ids.size() > 0) {
                     cv::aruco::drawDetectedMarkers(colorImg, marker_corners, marker_ids);
                     std::vector<cv::Vec3d> rvecs, tvecs;
-                    cv::aruco::estimatePoseSingleMarkers(marker_corners, MARKER_LENGTH, camera_matrix, dist_coeffs, rvecs, tvecs);
-                    for (int i = 0; i < marker_ids.size(); i++) {
-                    //    std::cout << tvecs[i] * 1000 << std::endl;
-                        std::cout << rvecs[i] << std::endl;
-                        cv::aruco::drawAxis(colorImg, camera_matrix, dist_coeffs, rvecs, tvecs, MARKER_LENGTH * 5);
-
-                    }
-
+                    //cv::aruco::estimatePoseSingleMarkers(marker_corners, MARKER_LENGTH, camera_matrix, dist_coeffs, rvecs, tvecs);
+                    //for (int i = 0; i < marker_ids.size(); i++) {
+                    //    //    std::cout << tvecs[i] * 1000 << std::endl;
+                    //    std::cout << "rvecs:" << rvecs[i] << std::endl;
+                    //    cv::aruco::drawAxis(colorImg, camera_matrix, dist_coeffs, rvecs, tvecs, MARKER_LENGTH * 5);
+                    //}
                 }
+
 
 
 
@@ -201,7 +220,7 @@ int main()
 
 
             // キー入力 "q" でプログラムを終了する
-            const int key = cv::waitKey(30);
+            const int key = cv::waitKey(100);
             if (key == 'q') {
                 break;
             }
